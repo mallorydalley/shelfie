@@ -1,26 +1,63 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from './Components/Header/Header'
+import Form from './Components/Form/Form'
+import Dashboard from './Components/Dashboard/Dashboard'
+import axios from 'axios'
+import {HashRouter} from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(){
+    super()
+    this.state = {
+      inventory: [],
+      selected: []
+  
+    }
+    this.componentDidMount = this.componentDidMount.bind(this)
+  }
+  componentDidMount(){
+    axios.get(`/api/inventory`)
+      .then(response => {
+        this.setState({inventory: response.data})
+      })
+      .catch(error => console.log(error))
+  }
+  createProduct = (name, price, image_url) => {
+    axios.post(`/api/product`, {name}, {price}, {image_url})
+      .then(response => {
+          this.setState({inventory: response.data})
+      })
+      .catch(error => console.log(error))
+    }
+  deleteProduct = (id) => {
+    axios.delete(`/api/product/${id}`)
+    .then(response => {
+      this.setState({inventory: response.data})
+    })
+    .catch(error => console.log(error))
+  }
+  render(){
+    return (
+      <HashRouter>
+        <div className="App">
+          <Header />
+          <Dashboard 
+            getProducts={this.componentDidMount}
+            inventory={this.state.inventory}
+            delete={this.deleteProduct}
+          />
+            
+          
+          <Form 
+            getProducts={this.componentDidMount}
+            createProduct={this.createProduct}
+            selectedProduct={this.state.selected}
+          />
+        </div>
+      </HashRouter>
+    );
+  }
 }
 
 export default App;
