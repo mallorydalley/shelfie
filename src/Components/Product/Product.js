@@ -8,7 +8,7 @@ class Product extends React.Component {
         }
     }
     render() {
-        console.log(this.props)
+        
         const {product} = this.props
         return (
             <div>
@@ -16,7 +16,7 @@ class Product extends React.Component {
                 <p>{product.price}</p>
                 <p>{product.img}</p>
                 <button 
-                    onClick={() => delete(product.id)}>
+                    onClick={() => this.props.delete(this.props.product.product_id)}>
                         Delete
                 </button>
             </div>

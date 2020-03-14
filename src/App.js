@@ -14,22 +14,20 @@ class App extends React.Component {
       selected: []
   
     }
-    this.componentDidMount = this.componentDidMount.bind(this)
+    this.getProducts = this.getProducts.bind(this)
   }
   componentDidMount(){
+    this.getProducts()
+  }
+  getProducts(){
     axios.get(`/api/inventory`)
       .then(response => {
-        this.setState({inventory: response.data})
+        console.log(response)
+        this.setState({ inventory: response.data })
       })
       .catch(error => console.log(error))
   }
-  createProduct = (name, price, image_url) => {
-    axios.post(`/api/product`, {name}, {price}, {image_url})
-      .then(response => {
-          this.setState({inventory: response.data})
-      })
-      .catch(error => console.log(error))
-    }
+  
   deleteProduct = (id) => {
     axios.delete(`/api/product/${id}`)
     .then(response => {
@@ -38,20 +36,21 @@ class App extends React.Component {
     .catch(error => console.log(error))
   }
   render(){
+    console.log(this.state.inventory)
     return (
       <HashRouter>
         <div className="App">
           <Header />
           <Dashboard 
-            getProducts={this.componentDidMount}
+            getProducts={this.getProducts}
             inventory={this.state.inventory}
             delete={this.deleteProduct}
           />
             
-          
+          {/* {this.state.inventory} */}
           <Form 
-            getProducts={this.componentDidMount}
-            createProduct={this.createProduct}
+            getProducts={this.getProducts}
+            
             selectedProduct={this.state.selected}
           />
         </div>

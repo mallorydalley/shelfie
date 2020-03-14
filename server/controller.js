@@ -12,7 +12,7 @@ module.exports = {
     createProduct: (req, res) => {
        const dbInstance = req.app.get('db')
        const {name, price, image_url} = req.body
-
+console.log(req.body)
        dbInstance.create_product([name, price, image_url])
        .then(() => res.sendStatus(200))
        .catch(err => {
