@@ -18,10 +18,11 @@ massive({
 
 app.use(express.json());
 
+app.get(`/api/product`, ctrl.getProduct)
 app.get(`/api/inventory`, ctrl.getInventory)
 app.post(`/api/product`, ctrl.createProduct)
 app.put(`/api/product/:product_id`, ctrl.editProduct)
 app.delete(`/api/product/:product_id`, ctrl.deleteProduct)
 
-const port = 9000
+const port = SERVER_PORT
 app.listen (port, () => console.log(`Server is listening on ${port}`))

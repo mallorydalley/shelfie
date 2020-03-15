@@ -12,18 +12,19 @@ class Dashboard extends React.Component{
     deleteProduct = (product_id) => {
         axios.delete(`/api/product/${product_id}`)
         .then(response => {
-            this.props.getProducts()
+            this.props.getInventory()
         })
     }
     render(){
+        // console.log(this.props)
         let inventoryList = this.props.inventory.map((ele, i) => {
             return <Product 
                 key={i} 
-                // product_id={ele.product_id}
-                
                 product={ele}
                 delete={this.deleteProduct} 
-                getProducts={this.props.getProducts}/>
+                getInventory={this.props.getInventory}
+                selected={this.props.selected}
+                />
             
         })
         return (

@@ -11,18 +11,17 @@ class App extends React.Component {
     super()
     this.state = {
       inventory: [],
-      selected: []
+      selected: null
   
     }
-    this.getProducts = this.getProducts.bind(this)
+    this.getInventory = this.getInventory.bind(this)
   }
   componentDidMount(){
-    this.getProducts()
+    this.getInventory()
   }
-  getProducts(){
+  getInventory(){
     axios.get(`/api/inventory`)
       .then(response => {
-        console.log(response)
         this.setState({ inventory: response.data })
       })
       .catch(error => console.log(error))
@@ -35,24 +34,29 @@ class App extends React.Component {
     })
     .catch(error => console.log(error))
   }
+  handleSelected = () => {
+    this.setState({selected: this.data.product_id})
+  }
   render(){
     console.log(this.state.inventory)
     return (
       <HashRouter>
         <div className="App">
           <Header />
-          <Dashboard 
-            getProducts={this.getProducts}
-            inventory={this.state.inventory}
-            delete={this.deleteProduct}
-          />
-            
-          {/* {this.state.inventory} */}
-          <Form 
-            getProducts={this.getProducts}
-            
-            selectedProduct={this.state.selected}
-          />
+          <div className='dashAndForm'>
+            <Dashboard 
+              getInventory={this.getInventory}
+              inventory={this.state.inventory}
+              delete={this.deleteProduct}
+              selected={this.state.selected}
+            />
+              
+            {/* {this.state.inventory} */}
+            <Form 
+              getInventory={this.getInventory}
+              selected={this.state.selected}
+            />
+          </div>
         </div>
       </HashRouter>
     );

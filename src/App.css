@@ -4,17 +4,84 @@
 
 header{
   height: 80px;
-  background-color: red;
+  background-color: #ab301f;
 }
 
+.dashAndForm {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+/* Form */
 .form{
-  width: 200px;
-  height: 300px;
-  background-color: green;
+  width: 280px;
+  height: 400px;
+  background-color: #66d987;
+  float: right;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
+.form-img{
+  background-color: lightcoral;
+  height: 200px;
+  width: 260px;
+  margin: 5px;
+  display: flex;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  /* background-color: darkslategray; */
+  margin: 0 20px;
+  bottom: 0px;
+}
+
+.form-buttons {
+  background: #ed6b5a;
+  border-radius: 3px;
+  border: none;
+}
+
+/* Dashboard */
 .dashboard{
   width: 300px;
-  height: 400px;
-  background-color: darkred;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Product */
+.product {
+  height: 180px;
+  width: 400px;
+  background-color: #d34735;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.product-img{
+  float: left;
+  background-color: lavender;
+  height: 150px;
+  width: 220px;
+  margin: 10px;
+}
+
+.product-info{
+  background-color: lemonchiffon;
+  float: right;
+  width: 170px;
+  height: 150px;
+  margin-right: 10px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
 }

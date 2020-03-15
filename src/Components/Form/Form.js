@@ -29,14 +29,26 @@ class Form extends React.Component {
     createProduct = () => {
         const { image_url, name, price} = this.state
         axios.post(`/api/product`, { name, price, image_url })
-            .then(response => { this.props.getProducts() 
+            .then(response => { this.props.getInventory() 
             console.log(response)
             })
             .catch(error => console.log(error))
     }
-    componentDidUpdate(){
+    // componentDidMount(){
+//     axios.get(`/api/product`)
+//       .then(response => {
+//         console.log(response)
+//         this.setState({ inventory: response.data })
+//     })
+//     .catch(error => console.log(error))
+//   }
+    // componentDidUpdate(prevProps, prevState){
+    //     if(prevProps.selected.product_id === this.props.selected.product_id){
+    //         this.setState({name:this.props.selected.name, price: this.props.selected.price, image_url: this.props.selected.price_url})
+    // console.log(prevProps, prevState)
+    //     }
+    // }
 
-    }
     render() {
         console.log(this.state.image_url, this.state.name, this.state.price)
         // console.log(this.props)
@@ -44,19 +56,32 @@ class Form extends React.Component {
         const {name, price, image_url} = this.state
         return (
             <div className='form'>
-                <input 
-                    value={image_url}
-                    onChange={e => this.handleImage(e.target.value)}/>
-                <input 
-                    value={name}
-                    onChange={e => this.handleName(e.target.value)}/>
-                <input 
-                    value={price}
-                    onChange={e => this.handlePrice(e.target.value)}/>
-                
-                <button onClick={this.cancelChange}>Cancel</button>
-                
-                <button onClick={() => this.createProduct()}>Add</button>
+                <div className='form-img'>
+                    <img src={image_url} alt={name}/>
+                </div>
+                <div className='input-container'>
+                    <p>Image URL: </p>
+                    <input 
+                        value={image_url}
+                        onChange={e => this.handleImage(e.target.value)}/>
+                </div>
+                <div className='input-container'>
+                    <p>Name: </p>
+                    <input 
+                        value={name}
+                        onChange={e => this.handleName(e.target.value)}/>
+                </div>
+                <div className='input-container'>
+                    <p>Price:</p>
+                    <input 
+                        value={price}
+                        onChange={e => this.handlePrice(e.target.value)}/>
+                </div>
+                <div className='buttons'>
+                    <button className='form-buttons' onClick={this.cancelChange}>Cancel</button>
+                    
+                    <button className='form-buttons' onClick={() => this.createProduct()}>Add to Inventory</button>
+                </div>
             </div>
         )
     }

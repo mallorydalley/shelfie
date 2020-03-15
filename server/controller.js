@@ -1,4 +1,14 @@
 module.exports = {
+    getProduct:(req, res) => {
+        const dbInstance = req.app.get('db')
+
+        dbInstance.get_product()
+        .then(result => res.status(200).send(result))
+        .catch(err => {
+            res.status(500).send('Oops!')
+            console.log(err)
+        })
+    },
     getInventory: (req, res) => {
         const dbInstance = req.app.get('db')
 
