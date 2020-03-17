@@ -11,7 +11,7 @@ class App extends React.Component {
     super()
     this.state = {
       inventory: [],
-      selected: []
+      selected: null
   
     }
     this.getInventory = this.getInventory.bind(this)
@@ -35,11 +35,14 @@ class App extends React.Component {
     })
     .catch(error => console.log(error))
   }
-  handleSelected = () => {
-    this.setState({selected: this.data.product_id})
+  
+  selectProduct = (product) => {
+    this.setState({selected: product})
   }
   render(){
+    // console.log(this.props.product)
     // console.log(this.state.inventory)
+    
     return (
       <HashRouter>
         <div className="App">
@@ -50,6 +53,7 @@ class App extends React.Component {
               inventory={this.state.inventory}
               delete={this.deleteProduct}
               selected={this.state.selected}
+              selectProduct={this.selectProduct}
             />
               
             {/* {this.state.inventory} */}

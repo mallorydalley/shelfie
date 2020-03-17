@@ -10,14 +10,14 @@ class Product extends React.Component {
     }
     handleEditButton = () => {
         // this.setState({selected: this.props.product.product_id})
-        this.state.selected.push(this.props.product.product_id)
+        // this.state.selected.push(this.props.product.product_id)
 
-        console.log(this.props.product.product_id)
-        console.log(this.props.selected)
+        // console.log(this.props.product.product_id)
+        // console.log(this.props.selected)
     }
     render() {
         const {product} = this.props
-        console.log(this.props.product)
+        // console.log(this.props.product)
         return (
             <div className='product'>
                 <div className='product-img'>
@@ -34,7 +34,10 @@ class Product extends React.Component {
                     </button>
 
                     <button
-                        onClick={this.handleEditButton}
+                        onClick={() => {
+                            this.props.selectProduct(this.state.product)
+                            }
+                        }
                     >
                         Edit
                         {/* when button clicked it changes this.props.selected === this.props.product */}

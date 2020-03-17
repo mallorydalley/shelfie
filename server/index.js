@@ -18,7 +18,7 @@ massive({
 
 app.use(express.json());
 
-app.get(`/api/product`, ctrl.getProduct)
+app.get(`/api/product/:product_id`, ctrl.getProduct)
 app.get(`/api/inventory`, ctrl.getInventory)
 app.post(`/api/product`, ctrl.createProduct)
 app.put(`/api/product/:product_id`, ctrl.editProduct)

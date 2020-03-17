@@ -9,7 +9,7 @@ class Form extends React.Component {
             price: '',
             image_url: '',
             // editingId: this.props.selected.product_id,
-            soloProduct: []
+            soloProduct: this.props.product_id
         }
     }
     handleImage = (val) => {
@@ -31,19 +31,30 @@ class Form extends React.Component {
     createProduct = () => {
         const { image_url, name, price} = this.state
         axios.post(`/api/product`, { name, price, image_url })
-            .then(response => { this.props.getInventory() 
-            console.log(response)
+            .then(response => {
+                this.props.getInventory()
+                this.cancelChange()
+            
             })
             .catch(error => console.log(error))
     }
-    componentDidMount(){
-    axios.get(`/api/product`)
-      .then(response => {
-        console.log(response)
-        this.setState({ soloProduct: response.data })
-    })
-      .catch(error => console.log(error))
-  }
+    editProduct = (product_id, name, price, image_url) => {
+        // const { image_url, name, price} = this.state
+        axios.put(`/api/product/${product_id}`, { name, price, image_url})
+        .then(response => {
+            this.props.getInventory()
+            this.cancelChange()
+        })
+
+    }
+//     componentDidMount(){
+//     axios.get(`/api/product`)
+//       .then(response => {
+//         console.log(response)
+//         this.setState({ soloProduct: response.data })
+//     })
+//       .catch(error => console.log(error))
+//   }
     // componentDidUpdate(prevProps, prevState){
     //     if(prevProps.selected.product_id === this.props.selected.product_id){
     //         this.setState({name:this.props.selected.name, price: this.props.selected.price, image_url: this.props.selected.price_url})
@@ -51,15 +62,15 @@ class Form extends React.Component {
     //     }
     // }
     componentDidUpdate(prevProps, prevState){
-        if(prevProps.selected[0] !== this.props.selected[0]){
-            this.setState({ name: this.props.selected.name, price: this.props.selected.price, image_url: this.props.selected.price_url})
+        if(prevProps.selected !== this.props.selected){
+            this.setState({ name: this.props.selected.name, price: this.props.selected.price, image_url: this.props.selected.image_url})
         }
         console.log(this.props.selected)
     }
 
     render() {
         // console.log(this.state.image_url, this.state.name, this.state.price)
-        
+        console.log(this.props)
         // const {createProduct, inventory} = this.props
         const {name, price, image_url} = this.state
         return (
@@ -88,7 +99,17 @@ class Form extends React.Component {
                 <div className='buttons'>
                     <button className='form-buttons' onClick={this.cancelChange}>Cancel</button>
                     
-                    <button className='form-buttons' onClick={() => this.createProduct()}>Add to Inventory</button>
+                    {this.props.selected === null
+                    ?(
+                            <button className='form-buttons' onClick={this.createProduct}>Add to Inventory</button>
+                    )
+                    :(
+                            <button className='form-buttons' onClick={() => {
+                                this.editProduct(this.props.selected.product_id, name, price, image_url)}}>Save Changes</button>
+                            
+                    )
+                    }
+                    
                 </div>
             </div>
         )

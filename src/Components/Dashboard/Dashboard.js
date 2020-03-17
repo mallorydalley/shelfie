@@ -24,6 +24,7 @@ class Dashboard extends React.Component{
                 delete={this.deleteProduct} 
                 getInventory={this.props.getInventory}
                 selected={this.props.selected}
+                selectProduct={this.props.selectProduct}
                 />
             
         })

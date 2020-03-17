@@ -1,8 +1,9 @@
 module.exports = {
     getProduct:(req, res) => {
         const dbInstance = req.app.get('db')
+        const {id} = req.params
 
-        dbInstance.get_product()
+        dbInstance.get_product(id)
         .then(result => res.status(200).send(result))
         .catch(err => {
             res.status(500).send('Oops!')
@@ -22,7 +23,7 @@ module.exports = {
     createProduct: (req, res) => {
        const dbInstance = req.app.get('db')
        const {name, price, image_url} = req.body
-console.log(req.body)
+        console.log(req.body)
        dbInstance.create_product([name, price, image_url])
        .then(() => res.sendStatus(200))
        .catch(err => {
