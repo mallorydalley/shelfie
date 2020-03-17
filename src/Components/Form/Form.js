@@ -7,7 +7,9 @@ class Form extends React.Component {
         this.state = {
             name: '',
             price: '',
-            image_url: ''
+            image_url: '',
+            // editingId: this.props.selected.product_id,
+            soloProduct: []
         }
     }
     handleImage = (val) => {
@@ -34,24 +36,30 @@ class Form extends React.Component {
             })
             .catch(error => console.log(error))
     }
-    // componentDidMount(){
-//     axios.get(`/api/product`)
-//       .then(response => {
-//         console.log(response)
-//         this.setState({ inventory: response.data })
-//     })
-//     .catch(error => console.log(error))
-//   }
+    componentDidMount(){
+    axios.get(`/api/product`)
+      .then(response => {
+        console.log(response)
+        this.setState({ soloProduct: response.data })
+    })
+      .catch(error => console.log(error))
+  }
     // componentDidUpdate(prevProps, prevState){
     //     if(prevProps.selected.product_id === this.props.selected.product_id){
     //         this.setState({name:this.props.selected.name, price: this.props.selected.price, image_url: this.props.selected.price_url})
     // console.log(prevProps, prevState)
     //     }
     // }
+    componentDidUpdate(prevProps, prevState){
+        if(prevProps.selected[0] !== this.props.selected[0]){
+            this.setState({ name: this.props.selected.name, price: this.props.selected.price, image_url: this.props.selected.price_url})
+        }
+        console.log(this.props.selected)
+    }
 
     render() {
-        console.log(this.state.image_url, this.state.name, this.state.price)
-        // console.log(this.props)
+        // console.log(this.state.image_url, this.state.name, this.state.price)
+        
         // const {createProduct, inventory} = this.props
         const {name, price, image_url} = this.state
         return (

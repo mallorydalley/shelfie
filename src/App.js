@@ -11,7 +11,7 @@ class App extends React.Component {
     super()
     this.state = {
       inventory: [],
-      selected: null
+      selected: []
   
     }
     this.getInventory = this.getInventory.bind(this)
@@ -23,6 +23,7 @@ class App extends React.Component {
     axios.get(`/api/inventory`)
       .then(response => {
         this.setState({ inventory: response.data })
+        // console.log(response.data[0])
       })
       .catch(error => console.log(error))
   }
@@ -38,7 +39,7 @@ class App extends React.Component {
     this.setState({selected: this.data.product_id})
   }
   render(){
-    console.log(this.state.inventory)
+    // console.log(this.state.inventory)
     return (
       <HashRouter>
         <div className="App">
