@@ -20,12 +20,6 @@ class Dashboard extends React.Component{
             })
             .catch(error => console.log(error))
     }
-    // deleteProduct = (product_id) => {
-    //     axios.delete(`/api/product/${product_id}`)
-    //     .then(response => {
-    //         this.props.getInventory()
-    //     })
-    // }
     deleteProduct = (id) => {
         axios.delete(`/api/product/${id}`)
             .then(response => {
@@ -34,21 +28,20 @@ class Dashboard extends React.Component{
             .catch(error => console.log(error))
     }
     render(){
-        // console.log(match)
         let inventoryList = this.state.inventory.map((ele, i) => {
             return <Product 
                 key={i} 
                 product={ele}
                 delete={this.deleteProduct} 
                 getInventory={this.props.getInventory}
-                // selected={this.props.selected}
-                // selectProduct={this.props.selectProduct}
                 />
             
         })
         return (
-            <div className ='dashboard'>
-                {inventoryList}
+            <div className='dashboard-page'>
+                <div className ='dashboard'>
+                    {inventoryList}
+                </div>
             </div>
         )
     }

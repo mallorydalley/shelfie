@@ -9,40 +9,32 @@ class Product extends React.Component {
             product: this.props.product
         }
     }
-    // handleEditButton = () => {
-        // this.setState({selected: this.props.product.product_id})
-        // this.state.selected.push(this.props.product.product_id)
-
-        // console.log(this.props.product.product_id)
-        // console.log(this.props.selected)
-    // }
     render() {
         const {product} = this.props
-        // console.log(this.props)
         return (
             <div className='product'>
-                <div className='product-img'>
-                    <img src={product.image_url} alt={product.name}/>
+                <div className='img-container'>
+                    <img className='product-img' src={product.image_url} alt={product.name}/>
                 </div>
                 <div className='product-info'>
-                    <p>{product.name}</p>
-                    <p>{product.price}</p>
-                
+                    <div className='name-price'>
+                        <p>{product.name}</p>
+                        <p>{product.price}</p>
+                    </div>
+
+                    <div className='product-buttons'>
                         <button 
+                            className='product-button'
                             onClick={() => this.props.delete(this.props.product.product_id)}>
                                 Delete
                         </button>
                     
-                    <Link to={`/edit/${product.product_id}`}>
-                        <button
-                            // onClick={() => {
-                            //     this.props.selectProduct(this.state.product)
-                            //     }
-                            // }
-                        >
-                            Edit
-                        </button>
-                    </Link>
+                        <Link to={`/edit/${product.product_id}`}>
+                            <button         className='product-button'>
+                                Edit
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         )
