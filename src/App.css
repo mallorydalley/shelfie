@@ -7,6 +7,25 @@ header{
   background-color: #ab301f;
 }
 
+.nav{
+  height: 80px;
+  background-color: #ab301f;
+  display: flex;
+  align-items: center;
+}
+
+.link-wrap{
+  margin-left: 40px;
+}
+
+.links {
+  background-color: #ed6b5a;
+  border: none;
+  border-radius: 2px;
+  padding: 5px;
+  margin: 0 5px;
+}
+
 .dashAndForm {
   display: flex;
   justify-content: space-around;

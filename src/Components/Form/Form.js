@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios'
+import {Link, Switch, Route} from 'react-router-dom'
+import Dashboard from '../Dashboard/Dashboard';
 
 class Form extends React.Component {
     constructor(props) {
@@ -7,9 +9,7 @@ class Form extends React.Component {
         this.state = {
             name: '',
             price: '',
-            image_url: '',
-            // editingId: this.props.selected.product_id,
-            soloProduct: this.props.product_id
+            image_url: ''
         }
     }
     handleImage = (val) => {
@@ -32,8 +32,7 @@ class Form extends React.Component {
         const { image_url, name, price} = this.state
         axios.post(`/api/product`, { name, price, image_url })
             .then(response => {
-                this.props.getInventory()
-                this.cancelChange()
+                this.cancelChange();            
             
             })
             .catch(error => console.log(error))
@@ -42,37 +41,45 @@ class Form extends React.Component {
         // const { image_url, name, price} = this.state
         axios.put(`/api/product/${product_id}`, { name, price, image_url})
         .then(response => {
-            this.props.getInventory()
-            this.cancelChange()
+            this.setState({
+                // name: this.state.soloProduct.name,
+                // price: this.state.soloProduct.price,
+                // image_url: this.state.soloProduct.image_url
+            })
+            // this.cancelChange()
         })
 
     }
-//     componentDidMount(){
-//     axios.get(`/api/product`)
-//       .then(response => {
-//         console.log(response)
-//         this.setState({ soloProduct: response.data })
-//     })
-//       .catch(error => console.log(error))
-//   }
+    componentDidMount(){
+    axios.get(`/api/product/${this.props.match.params.product_id}`)
+      .then(response => {
+        console.log(response)
+        this.setState({ 
+            name: response.data[0].name,
+            price: response.data[0].price,
+            image_url: response.data[0].image_url
+        })
+    })
+      .catch(error => console.log(error))
+  }
     // componentDidUpdate(prevProps, prevState){
     //     if(prevProps.selected.product_id === this.props.selected.product_id){
     //         this.setState({name:this.props.selected.name, price: this.props.selected.price, image_url: this.props.selected.price_url})
     // console.log(prevProps, prevState)
     //     }
     // }
+
     componentDidUpdate(prevProps, prevState){
-        if(prevProps.selected !== this.props.selected){
-            this.setState({ name: this.props.selected.name, price: this.props.selected.price, image_url: this.props.selected.image_url})
+        if (prevProps.match.params.product_id !== this.props.match.params.product_id){
+            this.setState({ name: '', price: '', image_url: ''})
         }
-        console.log(this.props.selected)
     }
 
     render() {
         // console.log(this.state.image_url, this.state.name, this.state.price)
-        console.log(this.props)
+        console.log(this.props.match.params)
         // const {createProduct, inventory} = this.props
-        const {name, price, image_url} = this.state
+        const {name, price, image_url, soloProduct} = this.state
         return (
             <div className='form'>
                 <div className='form-img'>
@@ -99,16 +106,33 @@ class Form extends React.Component {
                 <div className='buttons'>
                     <button className='form-buttons' onClick={this.cancelChange}>Cancel</button>
                     
-                    {this.props.selected === null
-                    ?(
-                            <button className='form-buttons' onClick={this.createProduct}>Add to Inventory</button>
-                    )
-                    :(
-                            <button className='form-buttons' onClick={() => {
-                                this.editProduct(this.props.selected.product_id, name, price, image_url)}}>Save Changes</button>
+                    <Switch>
+                        <Route 
+                            path='/add'
+                            render={() => (
+                                <Link to='/'>
+                                    <button className='form-buttons' onClick={this.createProduct}>Add to Inventory</button>
+                                </Link>
+                            )}
+                        />
+                        <Route
+                            path='/edit/:id'
+                            render={() => (
+                                <Link to='/'>
+                                    <button className='form-buttons' onClick={() => {
+                                        this.editProduct(this.props.match.params.product_id, name, price, image_url)
+                                    }}>Save Changes</button>
+                                </Link> 
+                            )}
+                        />
                             
-                    )
-                    }
+                    
+                        
+
+            
+                            
+                    
+                </Switch>
                     
                 </div>
             </div>
